@@ -1,0 +1,1 @@
+{"amount": 2000.0, "transaction_type": "Credit", "user_id": "c765b9eb-c2a3-4a51-b8c0-2b3990c1f9f4"}
