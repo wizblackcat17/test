@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>View Prices</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Prices Data</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item ID</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for price in price_data %}
+                <tr>
+                    <td>{{ price[0] }}</td>
+                    <td>{{ price[1] }}</td>
+                    <td>{{ price[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

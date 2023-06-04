@@ -26,10 +26,23 @@ def main(db_connector):
         # insert data
         for entry in apple:
             print(entry)
-            db_connector.connect_to_db(f"INSERT INTO even_distribution (user_id, track_id, active, campaign_type, user_type) VALUES ('{entry['user_id']}', '{entry['track_id']}', '{entry['active']}', '{entry['campaign_type']}', '{entry['user_type']}')", True)
+            # before making entry into even_distribution (table), we need to add the track into the spotify_track
+            track_id = make_entry_for_spotify_track(db_connector, entry)
+            print("track_id", track_id[0][0])
+            track_id = track_id[0][0]
+            db_connector.connect_to_db(f"INSERT INTO even_distribution (user_id, track_id, active, campaign_type, user_type) VALUES ('{entry['user_id']}', '{track_id}', '{entry['active']}', '{entry['campaign_type']}', '{entry['user_type']}')", True)
 
     pass
 
+
+def make_entry_for_spotify_track(db_connector, entry):
+    res = db_connector.connect_to_db(f"SELECT id FROM spotify_tracks WHERE track_uid='{entry['track_id']}';", False)
+    if res:
+        print("Has data")
+        return res
+    print("Has NO data")
+    db_connector.connect_to_db(f"INSERT INTO spotify_tracks (track_uid) VALUES ('{entry['track_id']}')", True)
+    return db_connector.connect_to_db(f"SELECT id FROM spotify_tracks WHERE track_uid='{entry['track_id']}';", False)
 
 if __name__ == "__main__":
     database = database_credentials
